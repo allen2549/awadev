@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>awadev - Transformamos ideias em soluções digitais</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -15,9 +16,9 @@
         body {
             font-family: 'Manjari', sans-serif;
             background: linear-gradient(135deg, #0e0020 0%, #001520 100%);
-            min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            scroll-behavior: smooth;
         }
 
         /* Floating particles background */
@@ -61,16 +62,157 @@
             }
         }
 
-        /* Main container */
-        .container {
+        /* Liquid glass orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(61, 116, 255, 0.3), rgba(27, 208, 192, 0.2));
+            filter: blur(40px);
+            animation: orbFloat 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .orb1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            right: -5%;
+            animation-delay: -3s;
+        }
+
+        .orb3 {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -6s;
+        }
+
+        .orb4 {
+            width: 120px;
+            height: 120px;
+            top: 80%;
+            left: 10%;
+            animation-delay: -1s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(20px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-10px, 20px) scale(0.9);
+            }
+            75% {
+                transform: translate(30px, 10px) scale(1.05);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(14, 0, 32, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu li a:hover {
+            color: #3d74ff;
+        }
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        /* Section base */
+        .section {
             position: relative;
             z-index: 2;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 100px 20px 50px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* Glass card */
@@ -82,10 +224,7 @@
             box-shadow: 
                 0 8px 32px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            padding: 40px 30px;
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
+            padding: 40px;
             position: relative;
             overflow: hidden;
             animation: cardGlow 3s ease-in-out infinite alternate;
@@ -106,7 +245,6 @@
             }
         }
 
-        /* Glass shine effect */
         .glass-card::before {
             content: '';
             position: absolute;
@@ -124,9 +262,19 @@
             100% { left: 100%; }
         }
 
-        /* Logo */
+        /* Hero section */
+        .hero {
+            text-align: center;
+            justify-content: center;
+        }
+
+        .hero .glass-card {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .logo {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 700;
             background: linear-gradient(45deg, #3d74ff, #1bd0c0);
             -webkit-background-clip: text;
@@ -142,9 +290,8 @@
             100% { transform: translateY(-5px); }
         }
 
-        /* Main heading */
-        .main-heading {
-            font-size: 1.8rem;
+        .hero-heading {
+            font-size: 2.2rem;
             font-weight: 400;
             color: #ffffff;
             margin-bottom: 25px;
@@ -153,21 +300,19 @@
             animation: fadeInUp 1s ease-out 0.5s both;
         }
 
-        /* Description */
-        .description {
-            font-size: 1rem;
+        .hero-description {
+            font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin-bottom: 35px;
             animation: fadeInUp 1s ease-out 1s both;
         }
 
-        /* CTA Button */
         .cta-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 15px 30px;
+            padding: 18px 40px;
             background: linear-gradient(45deg, #3d74ff, #1bd0c0);
             color: #ffffff;
             text-decoration: none;
@@ -201,8 +346,200 @@
             box-shadow: 0 12px 35px rgba(61, 116, 255, 0.4);
         }
 
-        .cta-button:active {
-            transform: translateY(-1px);
+        /* About section */
+        .about {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .value-item {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .value-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(61, 116, 255, 0.2);
+        }
+
+        .value-item h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3d74ff;
+            margin-bottom: 15px;
+        }
+
+        .value-item p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Alessandro section */
+        .alessandro {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .alessandro-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .alessandro-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 20px 50px rgba(61, 116, 255, 0.3);
+            animation: avatarFloat 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes avatarFloat {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .alessandro-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .alessandro-text h3 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+        }
+
+        .alessandro-text p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* Mission Vision section */
+        .mission-vision {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .mvv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .mvv-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mvv-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+        }
+
+        .mvv-item h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3d74ff;
+            margin-bottom: 20px;
+        }
+
+        .mvv-item p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        /* CTA section */
+        .cta-section {
+            background: rgba(255, 255, 255, 0.03);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(14, 0, 32, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
         }
 
         /* Animations */
@@ -218,93 +555,73 @@
         }
 
         /* Responsive design */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero-heading {
+                font-size: 1.8rem;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .alessandro-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .alessandro-avatar {
+                margin: 0 auto;
+            }
+
+            .mvv-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
             .glass-card {
                 padding: 30px 20px;
-                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-heading {
+                font-size: 1.5rem;
             }
 
             .logo {
                 font-size: 2.5rem;
             }
 
-            .main-heading {
-                font-size: 1.5rem;
+            .about-text h2,
+            .alessandro-text h2,
+            .cta-section h2 {
+                font-size: 2rem;
             }
 
-            .description {
-                font-size: 0.9rem;
-            }
-
-            .cta-button {
-                padding: 12px 25px;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .container {
-                padding: 15px;
+            .section {
+                padding: 80px 15px 30px;
             }
 
             .glass-card {
                 padding: 25px 15px;
-            }
-
-            .logo {
-                font-size: 2.2rem;
-            }
-
-            .main-heading {
-                font-size: 1.3rem;
-            }
-        }
-
-        /* Liquid glass orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(61, 116, 255, 0.3), rgba(27, 208, 192, 0.2));
-            filter: blur(40px);
-            animation: orbFloat 8s ease-in-out infinite;
-        }
-
-        .orb1 {
-            width: 200px;
-            height: 200px;
-            top: 10%;
-            left: -10%;
-            animation-delay: 0s;
-        }
-
-        .orb2 {
-            width: 150px;
-            height: 150px;
-            bottom: 20%;
-            right: -5%;
-            animation-delay: -3s;
-        }
-
-        .orb3 {
-            width: 100px;
-            height: 100px;
-            top: 60%;
-            left: 80%;
-            animation-delay: -6s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            25% {
-                transform: translate(20px, -30px) scale(1.1);
-            }
-            50% {
-                transform: translate(-10px, 20px) scale(0.9);
-            }
-            75% {
-                transform: translate(30px, 10px) scale(1.05);
+                border-radius: 20px;
             }
         }
     </style>
@@ -315,25 +632,186 @@
     <div class="orb orb1"></div>
     <div class="orb orb2"></div>
     <div class="orb orb3"></div>
+    <div class="orb orb4"></div>
 
-    <div class="container">
-        <div class="glass-card">
-            <h1 class="logo">awadev</h1>
-            <h2 class="main-heading">Transformamos ideias em soluções digitais</h2>
-            <p class="description">
-                Acreditamos que a tecnologia deve ser como o ar: invisível, mas essencial. 
-                Criamos soluções que se encaixam com naturalidade nas necessidades dos nossos clientes, 
-                transformando a complexidade em algo simples e acessível através da inovação e fluidez.
-            </p>
-            <a href="#" class="cta-button">Fale com a gente</a>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">awadev</div>
+            <ul class="nav-menu">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#founder">Fundador</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="section hero">
+        <div class="container">
+            <div class="glass-card">
+                <h1 class="logo">awadev</h1>
+                <h2 class="hero-heading">Transformamos ideias em soluções digitais</h2>
+                <p class="hero-description">
+                    Acreditamos que a tecnologia deve ser como o ar: invisível, mas essencial. 
+                    O nome awadev reflete essa leveza — uma fusão de "Awa" e "Development", 
+                    onde fluidez e inovação são o ponto de partida.
+                </p>
+                <a href="#contact" class="cta-button">Fale com a gente</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="glass-card">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Nosso Propósito</h2>
+                        <p>
+                            Transformar ideias em soluções digitais inovadoras, com foco em simplicidade, 
+                            funcionalidade e eficiência. Criamos soluções que se encaixam com naturalidade 
+                            nas necessidades dos nossos clientes, transformando a complexidade em algo 
+                            simples e acessível.
+                        </p>
+                        <p>
+                            Desafiar o óbvio. Criar soluções que conectam o usuário à tecnologia de forma 
+                            intuitiva e fluida, permitindo que os negócios prosperem com o mínimo de 
+                            esforço e o máximo de impacto.
+                        </p>
+                    </div>
+                    <div class="about-text">
+                        <h2>Nossa Visão</h2>
+                        <p>
+                            Imaginamos um mundo onde a tecnologia não é uma barreira, mas uma ponte. 
+                            Uma ponte que conecta o futuro ao presente, transformando cada desafio em 
+                            uma oportunidade de crescimento, de forma leve e natural.
+                        </p>
+                        <p>
+                            Acreditamos na inovação como motor do futuro, na simplicidade como chave 
+                            para a experiência, e na transparência como alicerce de cada relação.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-item">
+                    <h3>Inovação</h3>
+                    <p>Motor do futuro, sempre buscando maneiras criativas de resolver problemas complexos através da tecnologia.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Simplicidade</h3>
+                    <p>Chave para a experiência do usuário, transformando complexidade em soluções intuitivas e acessíveis.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Transparência</h3>
+                    <p>Alicerce de cada relação, construindo confiança através da honestidade e comunicação clara.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Vision Values -->
+    <section class="section mission-vision">
+        <div class="container">
+            <div class="mvv-grid">
+                <div class="glass-card mvv-item">
+                    <h3>Missão</h3>
+                    <p>
+                        Desafiar o óbvio. Criar soluções que conectam o usuário à tecnologia de forma 
+                        intuitiva e fluida, permitindo que os negócios prosperem com o mínimo de 
+                        esforço e o máximo de impacto.
+                    </p>
+                </div>
+                <div class="glass-card mvv-item">
+                    <h3>Visão</h3>
+                    <p>
+                        Imaginamos um mundo onde a tecnologia não é uma barreira, mas uma ponte. 
+                        Uma ponte que conecta o futuro ao presente, transformando cada desafio em 
+                        uma oportunidade de crescimento, de forma leve e natural.
+                    </p>
+                </div>
+                <div class="glass-card mvv-item">
+                    <h3>Valores</h3>
+                    <p>
+                        Acreditamos na inovação como motor do futuro, na simplicidade como chave 
+                        para a experiência, e na transparência como alicerce de cada relação. 
+                        Trabalhamos para que cada linha de código seja uma parte de uma jornada fluida.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alessandro Section -->
+    <section id="founder" class="section alessandro">
+        <div class="container">
+            <div class="glass-card">
+                <div class="alessandro-content">
+                    <div class="alessandro-avatar">
+                        <img src="images/perfil.jpg" alt="Foto de Alessandro" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>
+                    </div>
+                    <div class="alessandro-text">
+                        <h2>Quem está por trás da awadev?</h2>
+                        <h3>Alessandro</h3>
+                        <p>
+                            A awadev nasceu da minha paixão por tecnologia e da vontade de criar 
+                            soluções digitais que realmente façam a diferença. Sou Alessandro, 
+                            fundador da awadev, e desde sempre estive envolvido com desenvolvimento 
+                            de software, buscando maneiras de transformar ideias criativas em 
+                            soluções práticas e eficientes.
+                        </p>
+                        <p>
+                            Com experiência em diversos projetos, especialmente no mundo dos sites 
+                            e sistemas internos, meu foco sempre foi criar tecnologias que sejam 
+                            não só inovadoras, mas também acessíveis e fáceis de usar.
+                        </p>
+                        <p>
+                            A awadev é uma extensão desse propósito: um espaço onde a leveza e a 
+                            fluidez se encontram com a inovação, trazendo soluções digitais que 
+                            realmente atendem às necessidades dos nossos clientes de forma simples 
+                            e eficaz.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="section cta-section">
+        <div class="container">
+            <div class="glass-card">
+                <h2>Pronto para transformar suas ideias?</h2>
+                <p>
+                    Vamos conversar sobre como podemos criar soluções digitais que realmente 
+                    fazem a diferença para o seu negócio.
+                </p>
+                <a href="mailto:awadev@outlook.com.br" class="cta-button" target="_blank" rel="noopener noreferrer">Fale com a gente</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 awadev - Transformando ideias em soluções digitais</p>
+        </div>
+    </footer>
 
     <script>
         // Create floating particles
         function createParticles() {
             const particlesContainer = document.querySelector('.particles');
-            const particleCount = 50;
+            const particleCount = 60;
 
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -346,67 +824,247 @@
             }
         }
 
-        // Enhanced mouse movement effect
-        document.addEventListener('mousemove', (e) => {
-            const card = document.querySelector('.glass-card');
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
 
-        // Reset card position when mouse leaves
-        document.addEventListener('mouseleave', () => {
-            const card = document.querySelector('.glass-card');
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        // Enhanced mouse movement effect for glass cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 30;
+                const rotateY = (centerX - x) / 30;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            });
         });
 
-        // Smooth scroll for CTA button
-        document.querySelector('.cta-button').addEventListener('click', (e) => {
-            e.preventDefault();
-            // Add your contact form or WhatsApp link here
-            console.log('Contact button clicked');
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(14, 0, 32, 0.95)';
+            } else {
+                nav.style.background = 'rgba(14, 0, 32, 0.8)';
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.glass-card, .value-item, .mvv-item').forEach(el => {
+            observer.observe(el);
         });
 
         // Initialize particles
         createParticles();
 
-        // Add touch support for mobile
-        let touchStartX = 0;
-        let touchStartY = 0;
+        // Touch support for mobile
+        document.querySelectorAll('.glass-card').forEach(card => {
+            let touchStartX = 0;
+            let touchStartY = 0;
 
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
+            card.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            });
+
+            card.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = card.getBoundingClientRect();
+                const x = e.touches[0].clientX - rect.left;
+                const y = e.touches[0].clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 40;
+                const rotateY = (centerX - x) / 40;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            });
         });
 
-        document.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            const card = document.querySelector('.glass-card');
-            const rect = card.getBoundingClientRect();
-            const x = e.touches[0].clientX - rect.left;
-            const y = e.touches[0].clientY - rect.top;
+        // Parallax effect for orbs
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
             
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 30;
-            const rotateY = (centerX - x) / 30;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            document.querySelectorAll('.orb').forEach((orb, index) => {
+                const speed = (index + 1) * 0.3;
+                orb.style.transform = `translateY(${rate * speed}px)`;
+            });
         });
 
-        document.addEventListener('touchend', () => {
-            const card = document.querySelector('.glass-card');
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        // Dynamic particle creation based on scroll
+        let particleTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(particleTimeout);
+            particleTimeout = setTimeout(() => {
+                const newParticle = document.createElement('div');
+                newParticle.className = 'particle';
+                newParticle.style.left = Math.random() * 100 + '%';
+                newParticle.style.top = window.scrollY + Math.random() * window.innerHeight + 'px';
+                newParticle.style.animationDelay = '0s';
+                newParticle.style.animationDuration = '2s';
+                document.querySelector('.particles').appendChild(newParticle);
+                
+                setTimeout(() => {
+                    newParticle.remove();
+                }, 2000);
+            }, 100);
         });
+
+        // Typewriter effect for hero heading
+        function typeWriter(element, text, speed = 100) {
+            element.innerHTML = '';
+            let i = 0;
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            typing();
+        }
+
+        // Initialize typewriter effect when page loads
+        window.addEventListener('load', () => {
+            const heroHeading = document.querySelector('.hero-heading');
+            const originalText = heroHeading.textContent;
+            setTimeout(() => {
+                typeWriter(heroHeading, originalText, 50);
+            }, 2000);
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1s ease-in-out';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Easter egg - Konami code
+        let konamiCode = [];
+        const konamiSequence = [
+            'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+            'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+            'KeyB', 'KeyA'
+        ];
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.code);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join('') === konamiSequence.join('')) {
+                // Add special rainbow effect
+                document.body.style.animation = 'rainbow 2s ease-in-out infinite';
+                setTimeout(() => {
+                    document.body.style.animation = 'none';
+                }, 5000);
+            }
+        });
+
+        // Add rainbow keyframes for easter egg
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rainbow {
+                0% { filter: hue-rotate(0deg); }
+                25% { filter: hue-rotate(90deg); }
+                50% { filter: hue-rotate(180deg); }
+                75% { filter: hue-rotate(270deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+            
+            .nav-menu.active {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(14, 0, 32, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                gap: 20px;
+            }
+            
+            .nav-menu.active li a {
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .mobile-menu.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .mobile-menu.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Performance optimization - reduce particles on mobile
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('.particle').forEach((particle, index) => {
+                if (index % 2 === 0) {
+                    particle.remove();
+                }
+            });
+        }
     </script>
 </body>
 </html>
