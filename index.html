@@ -1,18 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>awadev</title>
-    <!-- Fonte Manjari -->
-    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400&display=swap" rel="stylesheet">
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="images/logo.png">
-    <head>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    </head>
+    <title>awadev - Transformamos ideias em soluções digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -21,847 +14,399 @@
 
         body {
             font-family: 'Manjari', sans-serif;
-            color: #333;
-            background-color: #f5f5f7; /* Apple-style light gray */
-            line-height: 1.6;
+            background: linear-gradient(135deg, #0e0020 0%, #001520 100%);
+            min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Vídeo de Fundo */
-        #background-video {
+        /* Floating particles background */
+        .particles {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 1; /* Opção para tornar o vídeo sutil */
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* Topbar */
-        .topbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 3rem;
-            backdrop-filter: blur(13px);
-            background-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Logo */
-        .topbar .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #002986;
-            letter-spacing: 1px;
-        }
-
-        /* Estilo do Menu de Navegação */
-        .topbar nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .topbar nav ul li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: color 0.3s ease-in-out;
-        }
-
-        .topbar nav ul li a:hover {
-            color: #002986;
-        }
-
-        /* Estilo do Ícone de Hambúrguer */
-        .hamburger {
-            display: none; /* Escondido por padrão */
-            cursor: pointer;
-            width: 30px;
-            height: 25px;
+        .particle {
             position: absolute;
-            right: -7rem; /* Alinha o ícone à direita */
-            z-index: 1001; /* Garante que o ícone fique acima do menu */
+            width: 2px;
+            height: 2px;
+            background: rgba(61, 116, 255, 0.5);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
         }
 
-        .hamburger div {
-            background-color: #002986; /* Cor das linhas */
-            height: 4px;
-            width: 100%;
-            border-radius: 5px;
-            position: absolute;
-            transition: all 0.3s ease-in-out;
+        .particle:nth-child(2n) {
+            background: rgba(27, 208, 192, 0.3);
+            animation-delay: -2s;
         }
 
-        .hamburger div:nth-child(1) {
-            top: 0;
+        .particle:nth-child(3n) {
+            background: rgba(255, 255, 255, 0.2);
+            animation-delay: -4s;
         }
 
-        .hamburger div:nth-child(2) {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .hamburger div:nth-child(3) {
-            bottom: 0;
-        }
-
-        /* Quando o menu estiver ativo, transforma o ícone de hambúrguer em "X" */
-        .topbar.active .hamburger div:nth-child(1) {
-            transform: rotate(45deg);
-            top: 50%;
-        }
-
-        .topbar.active .hamburger div:nth-child(2) {
-            opacity: 0;
-        }
-
-        .topbar.active .hamburger div:nth-child(3) {
-            transform: rotate(-45deg);
-            bottom: 50%;
-        }
-
-        /* Menu de Navegação em Telas Menores */
-        @media (max-width: 768px) {
-            .topbar {
-                padding: 0.5rem 1rem; /* Menos padding nas laterais */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
             }
-
-            .topbar .logo {
-                font-size: 1.2rem;
-            }
-
-            .topbar nav ul {
-                display: none; /* Esconde o menu inicialmente */
-                flex-direction: column;
-                gap: 1rem;
-                align-items: center;
-                width: 100%;
-                position: absolute;
-                top: 46px;
-                left: 0;
-                background-color: rgba(255, 255, 255, 0.9);
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                padding: 1rem;
-            }
-
-            .topbar.active nav ul {
-                display: flex; /* Exibe o menu ao clicar */
-            }
-
-            .topbar nav ul li a {
-                font-size: 1.1rem;
-                color: #002986;
-                text-align: center;
-                padding: 1rem;
-                width: 100%;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .topbar nav ul li a:hover {
-                background-color: #f0f0f0; /* Altera o fundo ao passar o mouse */
-                color: #002986;
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
             }
         }
 
-
-        /* Estilo do ícone de hambúrguer */
-        .hamburger {
-            display: none; /* Escondido por padrão */
-            cursor: pointer;
-            width: 30px;
-            height: 25px;
+        /* Main container */
+        .container {
             position: relative;
-            z-index: 1001; /* Para garantir que o ícone fique por cima do menu */
-        }
-
-        .hamburger div {
-            background-color: #002986; /* Cor das linhas */
-            height: 4px;
-            width: 100%;
-            border-radius: 5px;
-            position: absolute;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .hamburger div:nth-child(1) {
-            top: 0;
-        }
-
-        .hamburger div:nth-child(2) {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .hamburger div:nth-child(3) {
-            bottom: 0;
-        }
-
-        /* Quando o menu estiver ativo, transforma o ícone de hambúrguer em "X" */
-        .topbar.active .hamburger div:nth-child(1) {
-            transform: rotate(45deg);
-            top: 50%;
-        }
-
-        .topbar.active .hamburger div:nth-child(2) {
-            opacity: 0;
-        }
-
-        .topbar.active .hamburger div:nth-child(3) {
-            transform: rotate(-45deg);
-            bottom: 50%;
-        }
-
-        /* Mostrar o ícone de hambúrguer em telas menores */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
-        }
-
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            position: relative;
+            z-index: 2;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 0 2rem;
-            transition: backdrop-filter 0.1s ease-in-out; /* Transição suave para o blur */
-            overflow: hidden; /* Impede o vídeo de sair da área visível */
+            align-items: center;
+            padding: 20px;
         }
 
-        /* Overlay para o efeito de escurecimento e blur */
-        .hero .overlay {
+        /* Glass card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: cardGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cardGlow {
+            0% {
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 0 rgba(61, 116, 255, 0);
+            }
+            100% {
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 30px rgba(61, 116, 255, 0.2);
+            }
+        }
+
+        /* Glass shine effect */
+        .glass-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3); /* Camada escura */
-            backdrop-filter: blur(5px); /* Aplicando o efeito de blur no fundo */
-            z-index: 1; /* Coloca o overlay acima do vídeo */
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 4s ease-in-out infinite;
         }
 
-        /* Conteúdo do Hero */
-        .hero .content {
-            position: relative;
-            z-index: 2; /* Faz o conteúdo ficar acima do overlay */
-            max-width: 800px;
-            color: white;
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
         }
 
-        .hero h1 {
-            font-size: 12rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-        }
-
-        .hero .cta-button {
-            display: inline-block;
-            padding: 0.8rem 2.5rem;
-            font-size: 1rem;
-            background-color: #002986;
-            color: #fff;
-            border-radius: 12px;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 41, 134, 0.3);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .hero .cta-button:hover {
-            background-color: #001a5e;
-            transform: scale(1.05);
-        }
-
-        /* Features Section */
-        #features {
-            padding: 6rem 2rem;
-            text-align: center;
-            background-color: #fff;
-        }
-
-        #features h2 {
-            font-size: 2.5rem;
+        /* Logo */
+        .logo {
+            font-size: 3rem;
             font-weight: 700;
-            color: #002986;
-            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(61, 116, 255, 0.3);
+            animation: logoFloat 2s ease-in-out infinite alternate;
         }
 
-        #features p {
-            font-size: 1.2rem;
-            color: #555;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
+        @keyframes logoFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
         }
 
-        /* Footer */
-        footer {
-            padding: 2rem 1rem;
-            background-color: #f5f5f7;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #777;
-            border-top: 1px solid #e1e1e1;
+        /* Main heading */
+        .main-heading {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.5s both;
         }
 
-        footer a {
-            text-decoration: none;
-            color: #002986;
-            font-weight: 500;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Slider Styles */
-        .slider {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        .slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .slide {
-            min-width: 100%;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .slide img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
-        }
-
-        .slide h3 {
-            font-size: 1.5rem;
-            color: #002986;
-            margin-bottom: 0.5rem;
-        }
-
-        .slide p {
+        /* Description */
+        .description {
             font-size: 1rem;
-            color: #555;
-            max-width: 600px;
-            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
+            margin-bottom: 35px;
+            animation: fadeInUp 1s ease-out 1s both;
         }
 
-        /* Projetos: Limitar tamanho da descrição */
-        .slide-content {
-            max-height: 150px; /* Ajuste conforme necessário */
-            overflow-y: auto;
-            padding-right: 0.5rem;
-            text-align: left;
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #3d74ff, #1bd0c0);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(61, 116, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 1.5s both;
         }
 
-        /* Estilizar a barra de rolagem (opcional) */
-        .slide-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .slide-content::-webkit-scrollbar-thumb {
-            background: #002986;
-            border-radius: 3px;
-        }
-
-        .slide-content::-webkit-scrollbar-thumb:hover {
-            background: #0056d6;
-        }
-
-        /* Ajustando botões do slider */
-        .prev-btn, .next-btn {
+        .cta-button::before {
+            content: '';
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #002986;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 3rem; /* Tamanho ajustado */
-            height: 3rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 41, 134, 0.3);
-            transition: background-color 0.3s ease-in-out;
-            z-index: 10; /* Garante que os botões fiquem visíveis acima do slider */
-        }
-
-        .prev-btn {
-            left: 1rem; /* Traz o botão "Anterior" para dentro da área visível */
-        }
-
-        .next-btn {
-            right: 1rem; /* Traz o botão "Próximo" para dentro da área visível */
-        }
-
-        /* Ajustando hover */
-        .prev-btn:hover, .next-btn:hover {
-            background-color: #001a5e;
-        }
-
-        /* Formulário */
-        form {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Rótulos */
-        form label {
-            display: block;
-            font-size: 1rem;
-            color: #002986;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        /* Campos de entrada */
-        form input, form select, form textarea {
+            top: 0;
+            left: -100%;
             width: 100%;
-            padding: 0.8rem;
-            font-size: 1rem;
-            color: #333;
-            background-color: #f5f5f7;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease-in-out;
-            font-family: 'Manjari', sans-serif;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
 
-        /* Campos em foco */
-        form input:focus, form select:focus, form textarea:focus {
-            border-color: #002986;
-            outline: none;
-            box-shadow: 0 0 8px rgba(0, 41, 134, 0.2);
+        .cta-button:hover::before {
+            left: 100%;
         }
 
-        /* Botão Enviar */
-        form button {
-            background-color: #002986;
-            color: #fff;
-            font-size: 1rem;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(61, 116, 255, 0.4);
         }
 
-        form button:hover {
-            background-color: #001a5e;
-            transform: scale(1.05);
+        .cta-button:active {
+            transform: translateY(-1px);
         }
 
-        #message {
-            resize: none; /* Desabilita o redimensionamento */
-            width: 100%; /* Ajusta a largura ao layout */
-            height: 150px; /* Define uma altura padrão */
-            padding: 10px; /* Adiciona espaçamento interno */
-            border: 1px solid #ccc; /* Define uma borda padrão */
-            border-radius: 5px; /* Deixa os cantos arredondados */
-            font-size: 1rem; /* Ajusta o tamanho do texto */
-            font-family: 'Manjari', sans-serif; /* Garante que siga o design */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona sombra suave */
-            background-color: #fff; /* Define a cor de fundo */
-            transition: border-color 0.3s ease; /* Transição para foco */
-        }
-
-        #message:focus {
-            border-color: #002986; /* Muda a cor da borda ao focar */
-            outline: none; /* Remove a linha padrão de foco */
-        }
-        
-        @media (max-width: 768px) {
-
-            /* Hero Section */
-            .hero h1 {
-                font-size: 3rem;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            .hero p {
-                font-size: 1rem;
-                margin-bottom: 1.5rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            .hero .cta-button {
-                padding: 0.6rem 1.5rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .main-heading {
+                font-size: 1.5rem;
+            }
+
+            .description {
                 font-size: 0.9rem;
             }
 
-            /* Features Section */
-            #features h2 {
-                font-size: 2rem;
-            }
-            #features p {
+            .cta-button {
+                padding: 12px 25px;
                 font-size: 1rem;
-            }
-
-            /* Slider */
-            .slider .slide img {
-                width: 100%;
-                height: auto;
-            }
-            .prev-btn, .next-btn {
-                width: 2.5rem;
-                height: 2.5rem;
-                font-size: 1.2rem;
-            }
-
-            /* Formulário */
-            form input, form select, form textarea, form button {
-                font-size: 0.9rem;
-                padding: 0.6rem;
             }
         }
 
+        @media (max-width: 360px) {
+            .container {
+                padding: 15px;
+            }
 
+            .glass-card {
+                padding: 25px 15px;
+            }
+
+            .logo {
+                font-size: 2.2rem;
+            }
+
+            .main-heading {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Liquid glass orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(61, 116, 255, 0.3), rgba(27, 208, 192, 0.2));
+            filter: blur(40px);
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            right: -5%;
+            animation-delay: -3s;
+        }
+
+        .orb3 {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -6s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(20px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-10px, 20px) scale(0.9);
+            }
+            75% {
+                transform: translate(30px, 10px) scale(1.05);
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Topbar -->
-    <header class="topbar">
-        <div class="logo">awadev</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#features">Proposito</a></li>
-                <li><a href="#projects">Projetos</a></li>
-                <li><a href="#about">Sobre Nós</a></li>
-                <li><a href="#contact">Fale Conosco</a></li>
-            </ul>
-        </nav>
-    </header>
-        <script>
-            function toggleMenu() {
-                document.querySelector('.topbar').classList.toggle('active');
-            }
-        </script>
+    <div class="particles"></div>
     
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <video id="background-video" autoplay muted loop>
-            <source src="videos/background.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos HTML5.
-        </video>
-        <div class="overlay"></div>
-        <div class="content">
-            <h1>awadev</h1>
-            <p>Transformar ideias em soluções digitais inovadoras, com foco em simplicidade, funcionalidade e eficiência.</p>
-            <a href="#features" class="cta-button">Saiba Mais</a>
+    <div class="container">
+        <div class="glass-card">
+            <h1 class="logo">awadev</h1>
+            <h2 class="main-heading">Transformamos ideias em soluções digitais</h2>
+            <p class="description">
+                Acreditamos que a tecnologia deve ser como o ar: invisível, mas essencial. 
+                Criamos soluções que se encaixam com naturalidade nas necessidades dos nossos clientes, 
+                transformando a complexidade em algo simples e acessível através da inovação e fluidez.
+            </p>
+            <a href="#" class="cta-button">Fale com a gente</a>
         </div>
-    </section>
-
-   <!-- Features Section -->
-    <section id="features" style="padding: 6rem 2rem; text-align: center; background-color: #f9f9f9;">
-        <h2 style="font-size: 2.5rem; font-weight: 700; color: #002986; margin-bottom: 1.5rem;">Propósito</h2>
-        
-        <p style="font-size: 1.2rem; color: #555; max-width: 800px; margin: 0 auto; line-height: 1.8;">
-            Acreditamos que a tecnologia deve ser como o ar: invisível, mas essencial. O nome awadev reflete essa leveza — uma fusão de "Awa" e "Development", onde fluidez e inovação são o ponto de partida. Criamos soluções que se encaixam com naturalidade nas necessidades dos nossos clientes, transformando a complexidade em algo simples e acessível.
-        </p>
-
-        <div style="display: flex; justify-content: space-around; margin-top: 3rem; flex-wrap: wrap;">
-            <!-- Missão -->
-            <div style="max-width: 250px; text-align: center; margin-bottom: 2rem;">
-                <h3 style="font-size: 1.8rem; color: #002986; margin-bottom: 1rem;">Missão</h3>
-                <p style="font-size: 1rem; color: #555; line-height: 1.6;">
-                    Desafiar o óbvio. Criar soluções que conectam o usuário à tecnologia de forma intuitiva e fluida, permitindo que os negócios prosperem com o mínimo de esforço e o máximo de impacto.
-                </p>
-            </div>
-
-            <!-- Visão -->
-            <div style="max-width: 250px; text-align: center; margin-bottom: 2rem;">
-                <h3 style="font-size: 1.8rem; color: #002986; margin-bottom: 1rem;">Visão</h3>
-                <p style="font-size: 1rem; color: #555; line-height: 1.6;">
-                    Imaginamos um mundo onde a tecnologia não é uma barreira, mas uma ponte. Uma ponte que conecta o futuro ao presente, transformando cada desafio em uma oportunidade de crescimento, de forma leve e natural.
-                </p>
-            </div>
-
-            <!-- Valores -->
-            <div style="max-width: 250px; text-align: center; margin-bottom: 2rem;">
-                <h3 style="font-size: 1.8rem; color: #002986; margin-bottom: 1rem;">Valores</h3>
-                <p style="font-size: 1rem; color: #555; line-height: 1.6;">
-                    Acreditamos na inovação como motor do futuro, na simplicidade como chave para a experiência, e na transparência como alicerce de cada relação. Trabalhamos para que cada linha de código seja uma parte de uma jornada fluida, onde cada passo nos aproxima daquilo que é essencial.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Responsividade com Media Queries -->
-    <style>
-        @media (max-width: 768px) {
-            h2 {
-                font-size: 2rem;
-            }
-            .features div {
-                max-width: 100%;
-                margin: 1rem 0;
-            }
-            .features h3 {
-                font-size: 1.5rem;
-            }
-            .features p {
-                font-size: 0.9rem;
-                text-align: justify; /* Justifica o texto */
-            }
-        }
-    </style>
-
-    <!-- Projetos Realizados Section -->
-    <section id="projects" style="padding: 6rem 2rem; text-align: center; background-color: #f9f9f9;">
-        <h2 style="font-size: 2.5rem; font-weight: 700; color: #002986; margin-bottom: 1.5rem;">Projetos Realizados</h2>
-        <div class="slider">
-            <button class="prev-btn">&lt;</button>
-            <div class="slides">
-                <div class="slide">
-                    <img src="images/projeto_1.png" alt="Projeto PDV Rnè">
-                    <h3>PDV Rnè</h3>
-                    <div class="slide-content">
-                        <p><b>Sistema de Gestão Simples, Funcional e Inspirador</b></p>
-                        <p>
-                            O <b>PDV Rnè</b> nasceu como uma solução prática e acessível para pequenas empresas que desejam organizar suas operações de maneira eficiente e descomplicada.  
-                            Desenvolvido em <b>Python</b> com <b>Tkinter</b> para a interface gráfica e <b>SQLite</b> como banco de dados, este sistema é a união perfeita entre simplicidade e funcionalidade, atendendo às principais demandas de gestão com operações ágeis e intuitivas.
-                        </p>
-                        <p>
-                            O nome "<b>Rnè</b>" carrega um significado especial: o renascimento de um projeto que foi redesenhado do zero, com um propósito claro — empoderar pequenos negócios a gerirem seus produtos, clientes e vendas de forma eficaz.
-                        </p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="images/projeto_2.png" alt="Projeto Casa Ello Alta Gastronomia">
-                    <h3>Identidade Visual: Casa Ello Alta Gastronomia</h3>
-                    <div class="slide-content">
-                        <p>
-                            Este projeto marcou o nascimento da Awadev e, que começo incrível! Fomos desafiados a criar uma identidade visual que traduzisse toda a sofisticação e a leveza da alta gastronomia.  
-                            A Casa Ello, uma parceria de chefs renomados e visionários, confiou em nós para transformar sua arte culinária em uma marca que refletisse a delicadeza e a excelência de seus pratos.
-                        </p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="images/projeto_3.png" alt="Projeto AQbScience">
-                    <h3>AQbScience</h3>
-                    <div class="slide-content">
-                        <p>
-                            O desafio era claro: levar uma pequena empresa de consultoria especializada em Analytical Quality by Science para o próximo nível, no universo digital.  
-                            Com isso em mente, criamos uma identidade visual sofisticada, que reflete a precisão e o rigor científico da marca, ao mesmo tempo em que transmite acessibilidade e confiança.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <button class="next-btn">&gt;</button>
-        </div>
-    </section>
-
-    <!-- Sobre Section -->
-    <section id="about" style="padding: 6rem 2rem; text-align: center; background-color: #f9f9f9;">
-        <h2 style="font-size: 2.5rem; font-weight: 700; color: #002986; margin-bottom: 1.5rem;">Sobre Nós</h2>
-
-        <!-- Foto em Círculo -->
-        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem;">
-            <img src="images/perfil.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-
-        <!-- Nome -->
-        <h3 style="font-size: 1.8rem; font-weight: 600; color: #002986; margin-bottom: 1rem;">Alessandro</h3>
-
-        <p style="font-size: 1.2rem; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.8;">
-            A awadev nasceu da minha paixão por tecnologia e da vontade de criar soluções digitais que realmente façam a diferença. Sou Alessandro, fundador da awadev, e desde sempre estive envolvido com desenvolvimento de software, buscando maneiras de transformar ideias criativas em soluções práticas e eficientes.
-
-            Com experiência em diversos projetos, especialmente no mundo dos sites e sistemas internos, meu foco sempre foi criar tecnologias que sejam não só inovadoras, mas também acessíveis e fáceis de usar. A awadev é uma extensão desse propósito: um espaço onde a leveza e a fluidez se encontram com a inovação, trazendo soluções digitais que realmente atendem às necessidades dos nossos clientes de forma simples e eficaz.
-        </p>
-    </section>
-
-
-     <!-- Contato Section -->
-     <section id="contact" style="padding: 4rem 2rem; background-color: #f5f5f7;">
-        <h2 style="text-align: center; color: #002986; margin-bottom: 2rem;">Vamos Conversar!</h2>
-        <form id="contactForm" style="max-width: 600px; margin: 0 auto;" onsubmit="return sendEmail();">
-            <div>
-                <label for="name">Nome</label>
-                <input type="text" id="name" name="name" placeholder="Seu nome" required>
-            </div>
-            <div>
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Seu email" required>
-            </div>
-            <div>
-                <label for="phone">Celular</label>
-                <input type="tel" id="phone" name="phone" placeholder="Seu celular" required>
-            </div>
-            <div>
-                <label for="contactMethod">Como prefere ser contatado</label>
-                <select id="contactMethod" name="contactMethod" required>
-                    <option value="Whatsapp">Whatsapp</option>
-                    <option value="Email">Email</option>
-                </select>
-            </div>
-            <div>
-                <label for="service">Serviço de Interesse</label>
-                <select id="service" name="service" required>
-                    <option value="Sites">Sites</option>
-                    <option value="Softwares">Softwares</option>
-                    <option value="Outros">Outros</option>
-                </select>
-            </div>
-            <div>
-                <label for="subject">Assunto</label>
-                <input type="text" id="subject" name="subject" placeholder="Assunto" required>
-            </div>
-            <div>
-                <label for="message">Mensagem</label>
-                <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
-            </div>
-            <button type="submit">Enviar</button>
-        </form>
-    </section>
-
-    <!-- Footer -->
-    <footer style="padding: 2rem 2rem; text-align: center; background-color: #f9f9f9;">
-        <p style="font-size: 1rem; color: #555; margin-top: 1rem;">Siga-nos nas redes sociais</p>
-        
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <a href="https://www.instagram.com/awadevbr/" target="_blank" style="margin: 0 10px;">
-                <i class="fab fa-instagram" style="font-size: 30px; color: #002986;"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/awadesenvolvimento/" target="_blank" style="margin: 0 10px;">
-                <i class="fab fa-linkedin" style="font-size: 30px; color: #002986;"></i>
-            </a>
-        </div>
-
-        <p style="margin-top: 1rem; font-size: 1rem; color: #555;">&copy; 2024 awadev. Todos os direitos reservados.</p>
-
-    </footer>
+    </div>
 
     <script>
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const overlay = document.querySelector('.hero .overlay');
-            const blurAmount = Math.min(scrollY / 15, 20); // Limita o blur a 20px
-            overlay.style.backdropFilter = `blur(${blurAmount + 3}px)`; // Adiciona o valor inicial de 5px ao blur
-        });
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 50;
 
-        // Para o botão 'Saiba Mais'
-        const ctaButton = document.querySelector('.cta-button');
-        if (ctaButton) {
-            ctaButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1); // Remove o '#' do href
-                const targetElement = document.getElementById(targetId);
-
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth', // Rolagem suave
-                        block: 'start' // Alinha com o topo da seção
-                    });
-                }
-            });
-        }
-
-        // Para a topbar
-        document.querySelectorAll('.topbar nav ul li a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1); // Remove o '#' do href
-                const targetElement = document.getElementById(targetId);
-
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth', // Rolagem suave
-                        block: 'start' // Alinha com o topo da seção
-                    });
-                }
-            });
-        });
-
-        const slides = document.querySelector('.slides');
-        const slide = document.querySelectorAll('.slide');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-
-        let currentIndex = 0;
-
-        function showSlide(index) {
-            const totalSlides = slide.length;
-            if (index < 0) {
-                currentIndex = totalSlides - 1;
-            } else if (index >= totalSlides) {
-                currentIndex = 0;
-            } else {
-                currentIndex = index;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
             }
-            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
 
-        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
-        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+        // Enhanced mouse movement effect
+        document.addEventListener('mousemove', (e) => {
+            const card = document.querySelector('.glass-card');
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
 
+        // Reset card position when mouse leaves
+        document.addEventListener('mouseleave', () => {
+            const card = document.querySelector('.glass-card');
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        });
 
+        // Smooth scroll for CTA button
+        document.querySelector('.cta-button').addEventListener('click', (e) => {
+            e.preventDefault();
+            // Add your contact form or WhatsApp link here
+            console.log('Contact button clicked');
+        });
+
+        // Initialize particles
+        createParticles();
+
+        // Add touch support for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const card = document.querySelector('.glass-card');
+            const rect = card.getBoundingClientRect();
+            const x = e.touches[0].clientX - rect.left;
+            const y = e.touches[0].clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 30;
+            const rotateY = (centerX - x) / 30;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        document.addEventListener('touchend', () => {
+            const card = document.querySelector('.glass-card');
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        });
     </script>
-
-<script>
-    function sendEmail() {
-        // Pegar os dados do formulário
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const contactMethod = document.getElementById('contactMethod').value;
-        const service = document.getElementById('service').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-
-        // Gerar protocolo com base na data e hora atual
-        const now = new Date();
-        const protocolo = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
-
-        // Construir o assunto do e-mail com nome, serviço e protocolo
-        const emailSubject = `${name} - ${service} - ${protocolo}`;
-
-        // Construir o link mailto
-        const mailtoLink = `mailto:awadev@outlook.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(
-            `Nome: ${name}\nEmail: ${email}\nCelular: ${phone}\nPreferência de contato: ${contactMethod}\nServiço de Interesse: ${service}\n\nMensagem:\n${message}`
-        )}`;
-
-        // Abrir o cliente de e-mail em uma nova janela ou aba
-        window.open(mailtoLink);
-
-        // Impedir o envio normal do formulário
-        return false;
-    }
-</script>
-
-
 </body>
 </html>
